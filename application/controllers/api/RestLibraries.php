@@ -125,20 +125,24 @@ class RestLibraries extends CI_Controller {
     {
         $id = (int) $this->get('id');
 
-        // Validate the id.
         if ($id <= 0)
         {
             // Set the response and exit
             $this->response(null, 400); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+
+            $this->libraries->delete_library($id);
+
+            // $this->some_model->delete_something($id);
+            $message = [
+                'id' => $id,
+                'message' => 'Deleted the resource'
+            ];
+
+            $this->set_response($message, 204); // NO_CONTENT (204) being the HTTP response code
         }
 
-        // $this->some_model->delete_something($id);
-        $message = [
-            'id' => $id,
-            'message' => 'Deleted the resource'
-        ];
 
-        $this->set_response($message, 204); // NO_CONTENT (204) being the HTTP response code
     }
 
 

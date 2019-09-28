@@ -209,7 +209,18 @@ class User extends CI_Controller {
 	*/
 	public function delete($id)
 	{
-		$item = $this->users->delete_user($id);
+
+		$ch = curl_init(base_url('/api/restUsers/'.$id));
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		$response = curl_exec($ch);
+		curl_close($ch);
+
+		$result = json_decode($response);
+		//print_r($result);
+
 		redirect(base_url('user/'));
 	}
 
